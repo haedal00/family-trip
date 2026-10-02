@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#236b78">
+  <title>강릉·속초 가족 여행 기록지</title>
+  <style>
+    :root {
+      --ivory:#fffaf0;--paper:#fffdf8;--sea:#236b78;--sea-light:#e5f3f3;
+      --green:#315b4c;--green-light:#eaf2eb;--orange:#e88845;
+      --orange-light:#fff0e4;--ink:#263638;--muted:#687778;
+      --line:#e5ddd0;--shadow:0 10px 28px rgba(45,64,62,.09);--radius:20px
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);background:linear-gradient(180deg,#f8f2e8,var(--ivory) 45%,#f5f8f4);font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;line-height:1.65;font-size:16px}
+    a{color:inherit}.page{width:min(1120px,calc(100% - 32px));margin:auto}
+    .hero{position:relative;overflow:hidden;min-height:440px;display:flex;align-items:center;color:#fff;background:linear-gradient(115deg,rgba(22,71,78,.88),rgba(49,91,76,.78)),url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85") center/cover;border-radius:0 0 38px 38px;box-shadow:0 12px 30px rgba(35,107,120,.18)}
+    .hero:after{content:"🌊";position:absolute;right:7%;bottom:-32px;font-size:190px;opacity:.13;transform:rotate(-8deg)}
+    .hero-inner{position:relative;z-index:1;width:min(1120px,calc(100% - 32px));margin:auto;padding:64px 0}
+    .eyebrow{display:inline-flex;gap:8px;margin:0 0 14px;padding:6px 13px;color:#fff5df;border:1px solid #ffffff66;border-radius:999px;background:#ffffff1f;font-size:.9rem;font-weight:700}
+    h1,h2,h3,p{margin-top:0}h1{max-width:700px;margin-bottom:18px;font-size:clamp(2.1rem,6vw,4.5rem);line-height:1.15;letter-spacing:-.06em}
+    .hero-subtitle{max-width:670px;margin-bottom:30px;color:#f5fbf8;font-size:clamp(1rem,2vw,1.2rem)}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:9px}.hero-tag{padding:8px 13px;border-radius:12px;background:#ffffff29;border:1px solid #ffffff3d;font-size:.93rem}
+    main{padding:44px 0 80px}section{margin-bottom:54px;scroll-margin-top:22px}
+    .section-heading{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:20px}
+    .section-heading h2{margin-bottom:5px;color:var(--green);font-size:clamp(1.55rem,3vw,2.25rem);letter-spacing:-.04em}
+    .section-heading p{margin-bottom:0;color:var(--muted)}
+    .card,.day-card,.restaurant-card{background:#fffdf8e6;border:1px solid #e5ddd0e6;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .summary-card{min-height:145px;padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:18px}
+    .summary-card .icon{display:block;margin-bottom:8px;font-size:1.7rem}.summary-card strong{display:block;margin-bottom:5px;color:var(--green);font-size:1.05rem}.summary-card span{color:var(--muted);font-size:.94rem}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.info-card{padding:23px}.info-card h3{margin-bottom:12px;color:var(--sea);font-size:1.1rem}.info-card ul{margin:0;padding-left:20px}.info-card li{margin-bottom:5px}
+    .pill-list{display:flex;flex-wrap:wrap;gap:8px}.pill{display:inline-flex;padding:7px 11px;color:var(--green);background:var(--green-light);border-radius:999px;font-size:.9rem}
+    .days{display:grid;gap:18px}.day-card{overflow:hidden}.day-header{display:flex;align-items:center;gap:14px;padding:21px 23px;color:#fff;background:linear-gradient(120deg,var(--sea),var(--green))}
+    .day-number{display:grid;place-items:center;width:48px;height:48px;flex:0 0 48px;border-radius:15px;background:var(--orange);font-size:1.2rem;font-weight:800}.day-header h3{margin:0;font-size:1.28rem}.day-header small{display:block;opacity:.83}
+    .timeline{margin:0;padding:22px 25px 24px 63px;list-style:none;counter-reset:itinerary}.timeline li{position:relative;counter-increment:itinerary;padding:0 0 14px 19px;border-left:2px solid #cce1df}.timeline li:last-child{padding-bottom:0;border-left-color:transparent}
+    .timeline li:before{content:counter(itinerary);position:absolute;top:-2px;left:-14px;display:grid;place-items:center;width:26px;height:26px;color:#fff;background:var(--sea);border:3px solid var(--paper);border-radius:50%;font-size:.72rem;font-weight:800}
+    .restaurant-wrap{overflow-x:auto;border-radius:var(--radius);box-shadow:var(--shadow)}table{width:100%;min-width:850px;border-collapse:collapse;background:var(--paper)}th,td{padding:15px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{color:#fff;background:var(--green)}tr:last-child td{border-bottom:0}.restaurant-name{color:var(--sea);font-weight:800}.muted{color:var(--muted);font-size:.9rem}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:8px 12px;color:#fff;background:var(--sea);border:0;border-radius:10px;text-decoration:none;font-size:.88rem;font-weight:700;cursor:pointer}.button:hover{background:var(--green)}
+    .choice-box{margin-top:18px;padding:21px;background:var(--orange-light);border-left:5px solid var(--orange);border-radius:15px}.choice-box h3{margin-bottom:8px;color:#9d5323}.choice-box ol{margin:8px 0 0;padding-left:22px}
+    .snack-grid,.rain-grid,.check-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.snack,.rain-item{padding:16px 18px;background:var(--paper);border:1px solid var(--line);border-radius:15px}.snack strong{display:block;color:var(--green)}
+    details{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}details summary{padding:17px 19px;color:var(--sea);font-weight:800;cursor:pointer;list-style:none}details summary::-webkit-details-marker{display:none}details summary:after{content:"＋";float:right;color:var(--orange);font-size:1.3rem}details[open] summary:after{content:"－"}.rain-grid{padding:0 16px 16px}.rain-item strong{display:block;margin-bottom:4px;color:var(--green)}
+    .check-section{padding:24px}.check-section h3{margin-bottom:14px;color:var(--sea)}.check-item{display:flex;align-items:flex-start;gap:10px;padding:11px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;cursor:pointer}.check-item input{width:19px;height:19px;flex:0 0 19px;margin-top:3px;accent-color:var(--sea)}.check-item input:checked+span{color:var(--muted);text-decoration:line-through}
+    .progress{height:9px;margin:4px 0 18px;overflow:hidden;background:#e8eee9;border-radius:99px}.progress-bar{width:0;height:100%;background:linear-gradient(90deg,var(--sea),var(--orange));border-radius:inherit;transition:width .25s}
+    .undecided{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin:0;padding:0}.undecided li{padding:13px 15px 13px 37px;color:#6b552f;background:#fff8e9;border:1px solid #f3dfb4;border-radius:13px;list-style:none;position:relative}.undecided li:before{content:"⏳";position:absolute;left:12px}
+    .top-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 40px;padding:12px;background:#ffffffb8;border:1px solid var(--line);border-radius:15px;box-shadow:0 5px 18px #2d403c0d}.top-nav a{padding:7px 11px;color:var(--green);border-radius:9px;text-decoration:none;font-size:.9rem;font-weight:700}.top-nav a:hover{background:var(--sea-light)}
+    .footer{padding:32px 0 48px;color:var(--muted);text-align:center;font-size:.9rem}.footer a{color:var(--sea);font-weight:700}
+    @media(max-width:800px){.summary-grid{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:1fr}}
+    @media(max-width:560px){body{font-size:15px}.page{width:calc(100% - 22px)}.hero{min-height:465px;border-radius:0 0 25px 25px}.hero-inner{width:calc(100% - 28px);padding:45px 0}.summary-grid,.snack-grid,.rain-grid,.check-grid,.undecided{grid-template-columns:1fr}.section-heading{display:block}.section-heading p{margin-top:5px}.day-header,.timeline{padding-left:18px;padding-right:18px}.timeline{padding-left:57px}.check-section{padding:18px}.hero:after{right:-20px;font-size:130px}}
+    @media print{@page{margin:14mm}body{color:#111;background:#fff;font-size:10.5pt}.hero{min-height:auto;color:#111;background:#e7f1ef;border:1px solid #b9d2cd;box-shadow:none}.hero-inner{padding:28px}.hero-subtitle,.hero-tag{color:#333}.hero-tag{border-color:#9bbcb6;background:transparent}.hero:after,.top-nav{display:none}main{padding-top:25px}section{margin-bottom:25px;break-inside:avoid}.card,.day-card,.summary-card,.snack,.rain-item{box-shadow:none}details:not([open]) .rain-grid{display:grid}details summary:after{display:none}a{text-decoration:none}.footer{padding-bottom:0}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">🌿 가족 여행 결정 기록지</p>
+      <h1>강릉 · 속초<br>따뜻한 바다 여행</h1>
+      <p class="hero-subtitle">부모님과 함께 천천히 걷고, 맛있는 음식을 나누며, 오전에는 관광하고 오후에는 편안히 쉬는 3박 4일 여행입니다.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">2026. 11. 6. 금요일 ~ 11. 9. 월요일</span>
+        <span class="hero-tag">3박 4일</span>
+        <span class="hero-tag">성인 2명 · 가족 여행</span>
+        <span class="hero-tag">1인 약 60만 원</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <nav class="top-nav" aria-label="페이지 목차">
+      <a href="#overview">여행 개요</a><a href="#schedule">날짜별 일정</a><a href="#food">식당·간식</a><a href="#rain">우천 대안</a><a href="#checklist">준비물</a><a href="#confirm">재확인</a>
+    </nav>
+
+    <section id="overview">
+      <div class="section-heading"><div><h2>여행 한눈에 보기</h2><p>무리하지 않고 강릉과 속초의 대표 장소를 둘러봅니다.</p></div></div>
+      <div class="summary-grid">
+        <div class="summary-card"><span class="icon">🚆</span><strong>이동수단</strong><span>서울역 ↔ 강릉역 KTX<br>강릉·속초 렌터카</span></div>
+        <div class="summary-card"><span class="icon">💰</span><strong>예산</strong><span>1인 약 60만 원<br>교통·숙박·식비 등 포함</span></div>
+        <div class="summary-card"><span class="icon">👟</span><strong>걷는 정도</strong><span>하루 1만 보 이하<br>자동차와 짧은 도보 중심</span></div>
+        <div class="summary-card"><span class="icon">☕</span><strong>여행 리듬</strong><span>오전 관광<br>오후 카페·숙소 휴식</span></div>
+      </div>
+      <div class="info-grid" style="margin-top:18px">
+        <article class="card info-card"><h3>좋아하는 활동</h3><div class="pill-list"><span class="pill">바다 감상</span><span class="pill">전통시장</span><span class="pill">카페 방문</span><span class="pill">호수 산책</span></div></article>
+        <article class="card info-card"><h3>좋아하는 음식</h3><div class="pill-list"><span class="pill">초당순두부</span><span class="pill">물회</span><span class="pill">생선구이</span><span class="pill">막국수</span><span class="pill">닭강정</span></div><p class="muted" style="margin:13px 0 0">※ 너무 맵거나 자극적인 음식은 피합니다.</p></article>
+      </div>
+    </section>
+
+    <section id="schedule">
+      <div class="section-heading"><div><h2>날짜별 일정</h2><p>방문 순서에 따라 정리한 여행 동선입니다.</p></div></div>
+      <div class="days">
+        <article class="day-card"><div class="day-header"><div class="day-number">1</div><div><h3>강릉 도착 및 해변</h3><small>11월 6일 금요일 · 강릉 중심</small></div></div><ol class="timeline"><li>서울역에서 KTX 탑승</li><li>강릉역 도착 후 렌터카 수령</li><li>호텔 체크인 및 짐 정리</li><li>초당두부마을 이동</li><li>동화가든에서 점심</li><li>경포호수 산책</li><li>안목해변 커피거리 방문</li><li>카페에서 휴식 후 숙소 복귀</li></ol></article>
+        <article class="day-card"><div class="day-header"><div class="day-number">2</div><div><h3>강릉 시내와 전통시장</h3><small>11월 7일 토요일 · 문화와 시장</small></div></div><ol class="timeline"><li>호텔 조식</li><li>오죽헌 방문</li><li>선교장 방문</li><li>강릉 중앙시장 이동</li><li>시장에서 점심과 간식</li><li>월화거리 산책</li><li>숙소에서 휴식</li><li>강릉불고기 또는 막국수로 저녁</li><li>숙소 복귀</li></ol></article>
+        <article class="day-card"><div class="day-header"><div class="day-number">3</div><div><h3>속초 이동</h3><small>11월 8일 일요일 · 설악산과 속초</small></div></div><ol class="timeline"><li>호텔 체크아웃</li><li>속초로 이동</li><li>설악산 케이블카 탑승</li><li>설악산 주변에서 점심</li><li>속초 영금정 방문</li><li>아바이마을 갯배 체험</li><li>속초 중앙시장 방문</li><li>닭강정과 씨앗호떡 구입</li><li>속초 숙소 체크인</li></ol></article>
+        <article class="day-card"><div class="day-header"><div class="day-number">4</div><div><h3>낙산사 및 귀가</h3><small>11월 9일 월요일 · 양양과 귀가</small></div></div><ol class="timeline"><li>호텔 체크아웃</li><li>낙산사 방문</li><li>양양 또는 속초에서 점심</li><li>바닷가 카페 방문</li><li>렌터카 반납</li><li>강릉역으로 이동</li><li>KTX 탑승 후 서울역 도착</li></ol></article>
+      </div>
+    </section>
+
+    <section id="food">
+      <div class="section-heading"><div><h2>식당 후보 비교</h2><p>방문 전 영업시간과 대기 상황을 다시 확인합니다.</p></div></div>
+      <div class="restaurant-wrap">
+        <table>
+          <thead><tr><th>후보</th><th>이름·지점</th><th>메뉴</th><th>출처·확인일</th><th>미확인 정보</th><th>지도</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>후보 1</strong></td>
+              <td class="restaurant-name">동화가든 본점<br><span class="muted">강릉 초당동</span></td>
+              <td>짬뽕순두부<br>초당순두부</td>
+              <td>공식 홈페이지<br>지도 서비스<br><span class="muted">2026. 10. 2.</span></td>
+              <td>주말 대기 시간<br>재료 소진 여부</td>
+              <td><a class="button" href="https://map.kakao.com/?q=%EB%8F%99%ED%99%94%EA%B0%80%EB%93%A0%20%EB%B3%B8%EC%A0%90%20%EA%B0%95%EB%A6%89%20%EC%B4%88%EB%8B%B9%EB%8F%99" target="_blank" rel="noopener">지도 열기</a></td>
+            </tr>
+            <tr>
+              <td><strong>후보 2</strong></td>
+              <td class="restaurant-name">강릉불고기 초당점</td>
+              <td>한우 불고기<br>식사 메뉴</td>
+              <td>지도 서비스<br>이용자 후기<br><span class="muted">2026. 10. 2.</span></td>
+              <td>부모님과 함께 앉기 편한 좌석 여부</td>
+              <td><a class="button" href="https://map.kakao.com/?q=%EA%B0%95%EB%A6%89%EB%B6%88%EA%B3%A0%EA%B8%B0%20%EC%B4%88%EB%8B%B9%EC%A0%90" target="_blank" rel="noopener">지도 열기</a></td>
+            </tr>
+            <tr>
+              <td><strong>후보 3</strong></td>
+              <td class="restaurant-name">삼교리동치미막국수 본점</td>
+              <td>동치미막국수<br>수육</td>
+              <td>공식 안내 페이지<br>지도 서비스<br><span class="muted">2026. 10. 2.</span></td>
+              <td>비 오는 날 주차 상황<br>대기 시간</td>
+              <td><a class="button" href="https://map.kakao.com/?q=%EC%82%BC%EA%B5%90%EB%A6%AC%EB%8F%99%EC%B9%98%EB%AF%B8%EB%A7%89%EA%B5%AD%EC%88%98%20%EB%B3%B8%EC%A0%90" target="_blank" rel="noopener">지도 열기</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="choice-box">
+        <h3>✅ 선택한 식당: 동화가든 본점</h3>
+        <p>강릉의 대표 음식인 초당순두부를 맛볼 수 있고, 초당두부마을과 가까워 일정에 넣기 편합니다.</p>
+        <ol><li>매운 메뉴와 맵지 않은 메뉴를 함께 선택할 수 있음</li><li>부모님도 부담 없이 드실 수 있는 음식</li><li>대기 시간이 길 수 있으므로 오전 11시 이전 방문 권장</li></ol>
+      </div>
+
+      <h3 style="margin:30px 0 14px;color:var(--green)">식사와 구분한 간식 장소</h3>
+      <div class="snack-grid">
+        <div class="snack"><strong>강릉 중앙시장</strong>닭강정</div>
+        <div class="snack"><strong>안목해변 커피거리</strong>카페</div>
+        <div class="snack"><strong>속초 중앙시장</strong>씨앗호떡 · 오징어순대</div>
+        <div class="snack"><strong>초당동</strong>순두부 젤라토</div>
+        <div class="snack"><strong>대포항</strong>건어물 간식</div>
+      </div>
+    </section>
+
+    <section id="rain">
+      <div class="section-heading"><div><h2>우천 대안</h2><p>날씨에 따라 무리 없이 바꿔 사용할 수 있는 일정입니다.</p></div></div>
+      <details>
+        <summary>비가 올 때의 대체 일정 펼쳐보기</summary>
+        <div class="rain-grid">
+          <div class="rain-item"><strong>경포호수 산책</strong>강릉 아르떼뮤지엄</div>
+          <div class="rain-item"><strong>안목해변</strong>안목해변 카페에서 휴식</div>
+          <div class="rain-item"><strong>설악산 케이블카</strong>속초시립박물관</div>
+          <div class="rain-item"><strong>낙산사</strong>양양 쏠비치 실내 시설 또는 카페</div>
+          <div class="rain-item"><strong>야외 관광 일정</strong>강릉 중앙시장·속초 중앙시장</div>
+          <div class="rain-item"><strong>해변 산책</strong>테라로사 또는 대형 베이커리 카페</div>
+        </div>
+      </details>
+    </section>
+
+    <section id="checklist">
+      <div class="section-heading"><div><h2>준비물 체크리스트</h2><p>체크 상태는 이 기기에 자동으로 저장됩니다.</p></div></div>
+      <div class="card check-section">
+        <div class="progress"><div class="progress-bar" id="packingProgress"></div></div>
+        <p id="packingStatus" class="muted">0개 준비 완료</p>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-001"><span><b>TR-001</b> · 신분증 <small>(서류)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-002"><span><b>TR-002</b> · KTX 예약 확인서 <small>(예약)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-003"><span><b>TR-003</b> · 숙박 예약 확인서 <small>(예약)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-004"><span><b>TR-004</b> · 렌터카 예약 확인서 <small>(예약)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-005"><span><b>TR-005</b> · 휴대전화 <small>(전자기기)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-006"><span><b>TR-006</b> · 보조배터리 <small>(전자기기)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-007"><span><b>TR-007</b> · 편한 운동화 <small>(의류)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-008"><span><b>TR-008</b> · 따뜻한 겉옷 <small>(의류)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-009"><span><b>TR-009</b> · 개인 복용약 <small>(의약품)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-010"><span><b>TR-010</b> · 소화제와 진통제 <small>(의약품)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-011"><span><b>TR-011</b> · 접이식 우산 <small>(생활용품)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-012"><span><b>TR-012</b> · 물티슈와 휴대용 휴지 <small>(생활용품)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-013"><span><b>TR-013</b> · 차량용 충전기 <small>(생활용품)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-014"><span><b>TR-014</b> · 장바구니 <small>(기타)</small></span></label>
+          <label class="check-item"><input type="checkbox" data-group="packing" data-id="TR-015"><span><b>TR-015</b> · 보온병 <small>(기타)</small></span></label>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading"><div><h2>미정으로 남길 항목</h2><p>여행 전 상황에 맞춰 천천히 결정합니다.</p></div></div>
+      <ul class="undecided">
+        <li>강릉 숙소와 속초 숙소의 최종 선택</li><li>2일차 저녁 식당</li><li>속초에서 방문할 카페</li><li>설악산 케이블카 탑승 시간</li><li>렌터카 차종과 보험 범위</li><li>시장에서 구입할 간식 목록</li><li>여행 중 부모님의 휴식 시간과 장소</li>
+      </ul>
+    </section>
+
+    <section id="confirm">
+      <div class="section-heading"><div><h2>방문 전 재확인할 항목</h2><p>출발 전에 하나씩 확인해 주세요.</p></div></div>
+      <div class="card check-section">
+        <div class="progress"><div class="progress-bar" id="confirmProgress"></div></div>
+        <p id="confirmStatus" class="muted">0개 확인 완료</p>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-001"><span>KTX 출발 및 도착 시간</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-002"><span>숙소 체크인·체크아웃 시간</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-003"><span>렌터카 수령 및 반납 장소</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-004"><span>식당 영업시간과 휴무일</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-005"><span>식당 대기 시간과 주차 가능 여부</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-006"><span>설악산 케이블카 운행 여부</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-007"><span>낙산사 운영시간</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-008"><span>여행 기간의 강원도 날씨</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-009"><span>첫눈이나 결빙에 따른 도로 상황</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-010"><span>주차장 위치와 주차요금</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-011"><span>부모님의 보행 가능 거리</span></label>
+          <label class="check-item"><input type="checkbox" data-group="confirm" data-id="C-012"><span>고속도로 통행 상황</span></label>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-heading"><div><h2>공유 및 개발 문서</h2><p>가족 공유와 프로젝트 관리를 위한 주소입니다.</p></div></div>
+      <div class="info-grid">
+        <article class="card info-card"><h3>📄 최종 개발 요청문</h3><p class="muted">GitHub 저장소의 <code>/docs</code> 폴더에 저장</p><a class="button" href="https://github.com/example-user/travel-records/blob/main/docs/gangneung-sokcho-family-trip-development-request.md" target="_blank" rel="noopener">개발 요청문 열기</a></article>
+        <article class="card info-card"><h3>🌐 가족 공유 Pages</h3><p class="muted">여행 기록지 공유 주소</p><a class="button" href="https://example-user.github.io/travel-records/" target="_blank" rel="noopener">Pages 열기</a></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer page">
+    <p>강릉·속초 가족 여행 기록지 · 2026년 11월 6일 ~ 11월 9일</p>
+    <p>따뜻하고 안전한 여행을 준비해요 🌿</p>
+  </footer>
+
+  <script>
+    (function () {
+      const storageKey = "gangneung-sokcho-family-trip-checklist";
+
+      function loadState() {
+        try {
+          return JSON.parse(localStorage.getItem(storageKey)) || {};
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function saveState(state) {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(state));
+        } catch (error) {}
+      }
+
+      function updateProgress(group) {
+        const items = document.querySelectorAll('input[data-group="' + group + '"]');
+        const checked = Array.from(items).filter(function (item) {
+          return item.checked;
+        }).length;
+        const percent = items.length ? checked / items.length * 100 : 0;
+        const bar = document.getElementById(group === "packing" ? "packingProgress" : "confirmProgress");
+        const status = document.getElementById(group === "packing" ? "packingStatus" : "confirmStatus");
+
+        if (bar) {
+          bar.style.width = percent + "%";
+        }
+
+        if (status) {
+          status.textContent = checked + "개 " +
+            (group === "packing" ? "준비 완료" : "확인 완료") +
+            " · 전체 " + items.length + "개";
+        }
+      }
+
+      const state = loadState();
+
+      document.querySelectorAll("input[data-group][data-id]").forEach(function (checkbox) {
+        const key = checkbox.dataset.group + ":" + checkbox.dataset.id;
+        checkbox.checked = state[key] === true;
+
+        checkbox.addEventListener("change", function () {
+          state[key] = checkbox.checked;
+          saveState(state);
+          updateProgress(checkbox.dataset.group);
+        });
+      });
+
+      updateProgress("packing");
+      updateProgress("confirm");
+    }());
+  </script>
+</body>
+</html>
